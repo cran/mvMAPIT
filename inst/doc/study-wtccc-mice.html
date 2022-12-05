@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Joint modeling of hematology traits yields epistatic signal in stock of mice</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Joint modeling of hematology traits yields
+epistatic signal in stock of mice</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvMAPIT)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<blockquote>
+<p><strong>NOTE:</strong> Due to the size of the data, this vignette
+does not contain the output of the code.</p>
+</blockquote>
+<div id="preprocessing-of-the-heterogenous-stock-of-mice-dataset" class="section level1">
+<h1>Preprocessing of the heterogenous stock of mice dataset</h1>
+<p>This example study makes use of GWA data from the Wellcome Trust
+Centre for Human Genetics<span class="math inline">\(^{1,2,3}\)</span>
+(<a href="http://mtweb.cs.ucl.ac.uk/mus/www/mouse/index.shtml" class="uri">http://mtweb.cs.ucl.ac.uk/mus/www/mouse/index.shtml</a>).
+The genotypes from this study were downloaded directly using the
+<code>BGLR-R</code> package. This study contains <span class="math inline">\(N =\)</span> 1,814 heterogenous stock of mice from
+85 families (all descending from eight inbred progenitor strains)<span class="math inline">\(^{1,2}\)</span>, and 131 quantitative traits that
+are classified into 6 broad categories including behavior, diabetes,
+asthma, immunology, haematology, and biochemistry. Phenotypic
+measurements for these mice can be found freely available online to
+download (details can be found at <a href="http://mtweb.cs.ucl.ac.uk/mus/www/mouse/HS/index.shtml" class="uri">http://mtweb.cs.ucl.ac.uk/mus/www/mouse/HS/index.shtml</a>).
+In the main text, we focused on 15 hematological phenotypes including:
+atypical lymphocytes (ALY; <code>Haem.ALYabs</code>), basophils (BAS;
+<code>Haem.BASabs</code>), hematocrit (HCT; <code>Haem.HCT</code>),
+hemoglobin (HGB; <code>Haem.HGB</code>), large immature cells (LIC;
+<code>Haem.LICabs</code>), lymphocytes (LYM; <code>Haem.LYMabs</code>),
+mean corpuscular hemoglobin (MCH; <code>Haem.MCH</code>), mean
+corpuscular volume (MCV; <code>Haem.MCV</code>), monocytes (MON;
+<code>Haem.MONabs</code>), mean platelet volume (MPV;
+<code>Haem.MPV</code>), neutrophils (NEU; <code>Haem.NEUabs</code>),
+plateletcrit (PCT; <code>Haem.PCT</code>), platelets (PLT;
+<code>Haem.PLT</code>), red blood cell count (RBC;
+<code>Haem.RBC</code>), red cell distribution width (RDW;
+<code>Haem.RDW</code>), and white blood cell count (WBC;
+<code>Haem.WBC</code>). All phenotypes were previously corrected for
+sex, age, body weight, season, year, and cage effects <span class="math inline">\(^{1,2}\)</span>. For individuals with missing
+genotypes, we imputed values by the mean genotype of that SNP in their
+corresponding family. Only polymorphic SNPs with minor allele frequency
+above 5% were kept for the analyses. This left a total of <span class="math inline">\(J =\)</span> 10,227 autosomal SNPs that were
+available for all mice.</p>
+</div>
+<div id="analyze-hematology-traits-in-mice" class="section level1">
+<h1>Analyze hematology traits in mice</h1>
+<p>In this section, we apply mvMAPIT to individual-level genotypes and
+15 hematology traits in a heterogeneous stock of mice dataset from the
+Wellcome Trust Centre for Human Genetics<span class="math inline">\(^{1,2,3}\)</span>. This collection of data
+contains approximately <span class="math inline">\(N =\)</span> 2,000
+individuals depending on the phenotype, and each mouse has been
+genotyped at <span class="math inline">\(J =\)</span> 10,346 SNPs.
+Specifically, this stock of mice are known to be genetically related
+with population structure and the genetic architectures of these
+particular traits have been shown to have different levels of
+broad-sense heritability with varying contributions from non-additive
+genetic effects.</p>
+<div id="apply-mvmapit" class="section level2">
+<h2>Apply mvMAPIT</h2>
+<p>The number of complete samples in the data varies for different
+traits and trait pairs. For this study we created separate data sets for
+each trait and trait pair containing the genotype data in a genotype
+matrix encoded as <code>{0, 1, 2}</code> (minor allele count) and the
+trait or trait pair in a phenotype matrix. Apply <code>mvmapit()</code>
+to each data set by running the following.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mvmapit_TRAIT <span class="ot">&lt;-</span> <span class="fu">mvmapit</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>genotype),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>phenotype),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> <span class="st">&quot;hybrid&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>As a result, we get redundant <span class="math inline">\(P\)</span>-values for some of the univariate
+variance components. The statistical detection of epistasis is sensitive
+to sample size. Therefore, we coalesce the redundant data by keeping the
+analysis results of the largest data set used in the analysis and impute
+missing data from the next smaller data set that has no missing
+data.</p>
+</div>
+<div id="analysis-data-availability" class="section level2">
+<h2>Analysis Data Availability</h2>
+<p>The results of the paper data are published on Harvard Dataverse.
+Find the files for Download <a href="https://doi.org/10.7910/DVN/WPFIGU">here</a><span class="math inline">\(^{23}\)</span>. For running the code snippets in
+this vignette, download the two files</p>
+<ul>
+<li>mice_HCTHGB_MCVMCH.rds</li>
+<li>mice_SI_paper.rds</li>
+</ul>
+<p>and read the files using the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mice_SI_paper <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_SI_paper.rds&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mice_HCTHGB_MCVMCH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_HCTHGB_MCVMCH.rds&quot;</span>)</span></code></pre></div>
+</div>
+<div id="all-traits-overview" class="section level2">
+<h2>All Traits Overview</h2>
+<p>We also include results corresponding to the univariate MAPIT model
+and the covariance test for comparison. Overall, the single-trait
+marginal epistatic test does only identifies significant variants for
+the large immature cells (LIC) after Bonferroni correction (<span class="math inline">\(P = 4.83\times 10^{-6}\)</span>). A complete
+picture of this can be seen in the following figure, which depicts
+Manhattan plots of our genome-wide interaction study for all
+combinations of trait pairs. Here, we can see that most of the signal in
+the combined <span class="math inline">\(P\)</span>-values from mvMAPIT
+likely stems from the covariance component portion of the model.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>for_ticks_chr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(position <span class="sc">~</span> chr, mice_data<span class="sc">$</span>fisher, <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">first =</span> <span class="fu">min</span>(x), <span class="at">last =</span> <span class="fu">max</span>(x))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tick =</span> <span class="fu">floor</span>((position[,<span class="st">&quot;first&quot;</span>] <span class="sc">+</span> position[,<span class="st">&quot;last&quot;</span>]) <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chr2 =</span> <span class="fu">case_when</span>(chr <span class="sc">%%</span> <span class="dv">5</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                          chr <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>for_facetgrid_row <span class="ot">&lt;-</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #1&quot;</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #2&quot;</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Covariance&quot;</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Combined&quot;</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_SI_paper<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(x <span class="sc">~</span> y) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
+</div>
+<div id="two-trait-pairs-hct-hgb-as-well-as-mcv-mch" class="section level2">
+<h2>Two trait pairs HCT &amp; HGB as well as MCV &amp; MCH</h2>
+<p>The hypothesis that most of the signal in the combined <span class="math inline">\(P\)</span>-values from mvMAPIT likely stems from
+the covariance component portion of the model holds true for the joint
+pairwise analysis of hematocrit (HCT) and hemoglobin (HGB) and mean
+corpuscular hemoglobin (MCH) and mean corpuscular volume (MCV) (e.g.,
+see the third and fourth rows of the following figure).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_HCTHGB_MCVMCH<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(row <span class="sc">~</span> case, <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">row =</span> for_facetgrid_row)) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
+<p>One explanation for observing more signal in the covariance
+components over the univariate test could be derived from the traits
+having low heritability but high correlation between epistatic
+interaction effects. In our simulation studies (see publication) we
+showed that the sensitivity of the covariance statistic increased for
+these cases. Notably, the non-additive signal identified by the
+covariance test is not totally dependent on the empirical correlation
+between traits. Instead, as previously shown in our simulation study,
+the power of mvMAPIT over the univariate approach occurs when there is
+correlation between the effects of epistatic interactions shared between
+two traits. Importantly, many of the candidate SNPs selected by the
+mvMAPIT framework have been previously discovered by past publications
+as having some functional nonlinear relationship with the traits of
+interest. For example, the multivariate analysis with traits MCH and MCV
+show a significant SNP rs4173870 (<span class="math inline">\(P =
+4.89\times 10^{-10}\)</span>) in the gene hematopoietic cell-specific
+Lyn substrate 1 (Hcls1) on chromosome 16 which has been shown to play a
+role in differentiation of erythrocytes<span class="math inline">\(^7\)</span>. Similarly, the joint analysis of HGB
+and HCT shows hits in multiple coding regions. One example here are the
+SNPs rs3692165 (<span class="math inline">\(P = 1.82\times
+10^{-6}\)</span>) and rs13482117 (<span class="math inline">\(P =
+8.94\times 10^{-7}\)</span>) in the gene calcium voltage-gated channel
+auxiliary subunit alpha2delta 3 (Cacna2d3) on chromosome 14, which has
+been associated with decreased circulating glucose levels<span class="math inline">\(^8\)</span>, and SNP rs3724260 (<span class="math inline">\(P = 4.58\times 10^{-6}\)</span>) in the gene
+Dicer1 on chromosome 12 which has been annotated for anemia both in
+humans and mice<span class="math inline">\(^9\)</span>.</p>
+</div>
+<div id="notable-snps-with-marginal-epistatic-effects-after-applying-the-mvmapit-framework-to-15-hematology-traits" class="section level2">
+<h2>Notable SNPs with marginal epistatic effects after applying the
+mvMAPIT framework to 15 hematology traits</h2>
+<p>For full analysis, we provide a summary table which lists the
+combined <span class="math inline">\(P\)</span>-values after running
+mvMAPIT with Fisher’s method. The following table lists a select subset
+of SNPs in coding regions of genes that have been associated with
+phenotypes related to the hematopoietic system, immune system, or
+homeostasis and metabolism. Each of these are significant (after
+correction for multiple hypothesis testing) in the mvMAPIT analysis of
+related hematology traits. Some of these phenotypes have been reported
+as having large broad-sense heritability, which improves the ability of
+mvMAPIT to detect the signal. For example, the genes Arf2 and Cacna2d3
+are associated with phenotypes related to glucose homeostasis, which has
+been reported to have a large heritable component (estimated <span class="math inline">\(H^2 = 0.3\)</span> for insulin sensitivity<span class="math inline">\(^{10}\)</span>). Similarly, the genes App and Pex1
+are associated with thrombosis where (an estimated) more than half of
+phenotypic variation has been attributed to genetic effects (estimated
+<span class="math inline">\(H^2 \ge 0.6\)</span> for susceptibility to
+common thrombosis<span class="math inline">\(^{11}\)</span>).</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>SNP</strong></th>
+<th><strong>Location</strong></th>
+<th><strong>Trait 1</strong></th>
+<th><strong>Trait 2</strong></th>
+<th><strong>Trait 1 <span class="math inline">\(P\)</span></strong></th>
+<th><strong>Trait 2 <span class="math inline">\(P\)</span></strong></th>
+<th><strong>Cov. <span class="math inline">\(P\)</span></strong></th>
+<th><strong>Comb. <span class="math inline">\(P\)</span></strong></th>
+<th><strong>Gene</strong></th>
+<th><strong>Genomic Annotation</strong></th>
+<th><strong>Reference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rs3699393</td>
+<td>2:5887012</td>
+<td>MCV</td>
+<td>PLT</td>
+<td>0.21</td>
+<td>0.23</td>
+<td>5.75e-7</td>
+<td>4.9e-06</td>
+<td>Upf2</td>
+<td>anemia and abnormal bone marrow cell development</td>
+<td><span class="math inline">\(^{12}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs13478092</td>
+<td>5:3601413</td>
+<td>LIC</td>
+<td>PLT</td>
+<td>0.034</td>
+<td>0.58</td>
+<td>1.67e-10</td>
+<td>1.26e-9</td>
+<td>Pex1</td>
+<td>abnormal venous thrombosis</td>
+<td><span class="math inline">\(^{13}\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs3694887</td>
+<td>5:102770070</td>
+<td>ALY</td>
+<td>LIC</td>
+<td>1.26e-4</td>
+<td>0.013</td>
+<td>2.54e-6</td>
+<td>1.55e-9</td>
+<td>Aff1</td>
+<td>abnormal B and T cell number and morphology</td>
+<td><span class="math inline">\(^{14}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs3694887</td>
+<td>5:102770070</td>
+<td>LIC</td>
+<td>PLT</td>
+<td>0.013</td>
+<td>0.28</td>
+<td>5.47e-27</td>
+<td>4.49e-26</td>
+<td>Aff1</td>
+<td>abnormal B and T cell number and morphology</td>
+<td><span class="math inline">\(^{14}\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs13478923</td>
+<td>6:99475169</td>
+<td>ALY</td>
+<td>LIC</td>
+<td>2.8e-4</td>
+<td>0.12</td>
+<td>1.79e-6</td>
+<td>1.81e-8</td>
+<td>Foxp1</td>
+<td>abnormal B cell differentiation, physiology, count</td>
+<td><span class="math inline">\(^{15,16}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs13478924</td>
+<td>6:99571626</td>
+<td>ALY</td>
+<td>LIC</td>
+<td>3.11e-4</td>
+<td>0.12</td>
+<td>2.70e-6</td>
+<td>2.86e-8</td>
+<td>Foxp1</td>
+<td>abnormal B cell differentiation, physiology, count</td>
+<td><span class="math inline">\(^{15,16}\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs13478985</td>
+<td>6:115245823</td>
+<td>MCV</td>
+<td>WBC</td>
+<td>0.16</td>
+<td>0.40</td>
+<td>1.14e-81</td>
+<td>1.34e-78</td>
+<td>Atg7</td>
+<td>decreased bone marrow cell count</td>
+<td><span class="math inline">\(^{17}\)</span>, <span class="math inline">\(^{18}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs3723163</td>
+<td>11:103800737</td>
+<td>HCT</td>
+<td>LYM</td>
+<td>0.072</td>
+<td>0.30</td>
+<td>3.99e-107</td>
+<td>2.66e-104</td>
+<td>Arf2</td>
+<td>decreased fasting circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs3723163</td>
+<td>11:103800737</td>
+<td>HGB</td>
+<td>WBC</td>
+<td>0.069</td>
+<td>0.25</td>
+<td>1.85e-7</td>
+<td>6.76e-7</td>
+<td>Arf2</td>
+<td>decreased fasting circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="even">
+<td>rs3724260</td>
+<td>12:100163212</td>
+<td>HGB</td>
+<td>HCT</td>
+<td>0.030</td>
+<td>0.062</td>
+<td>1.44e-5</td>
+<td>4.58e-6</td>
+<td>Dicer1</td>
+<td>anemia</td>
+<td><span class="math inline">\(^9\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs3692165</td>
+<td>14:27756640</td>
+<td>HCT</td>
+<td>HGB</td>
+<td>0.026</td>
+<td>0.037</td>
+<td>9.9e-6</td>
+<td>1.8e-06</td>
+<td>Cacna2d3</td>
+<td>decreased circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="even">
+<td>rs3697466</td>
+<td>14:27485228</td>
+<td>HCT</td>
+<td>HGB</td>
+<td>0.026</td>
+<td>0.037</td>
+<td>9.9e-6</td>
+<td>1.8e-06</td>
+<td>Cacna2d3</td>
+<td>decreased circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs13482117</td>
+<td>14:27614362</td>
+<td>HCT</td>
+<td>HGB</td>
+<td>0.023</td>
+<td>0.03</td>
+<td>5.9e-6</td>
+<td>9.0e-07</td>
+<td>Cacna2d3</td>
+<td>decreased circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="even">
+<td>rs6159786</td>
+<td>14:27820736</td>
+<td>HCT</td>
+<td>HGB</td>
+<td>0.026</td>
+<td>0.037</td>
+<td>9.9e-6</td>
+<td>1.8e-06</td>
+<td>Cacna2d3</td>
+<td>decreased circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs6244569</td>
+<td>14:27044891</td>
+<td>HCT</td>
+<td>HGB</td>
+<td>0.026</td>
+<td>0.037</td>
+<td>9.9e-6</td>
+<td>1.8e-06</td>
+<td>Cacna2d3</td>
+<td>decreased circulating glucose level</td>
+<td><span class="math inline">\(^8\)</span></td>
+</tr>
+<tr class="even">
+<td>rs13482288</td>
+<td>14:81840412</td>
+<td>ALY</td>
+<td>BAS</td>
+<td>0.036</td>
+<td>0.65</td>
+<td>1.78e-8</td>
+<td>1.1e-07</td>
+<td>Tdrd3</td>
+<td>abnormal B cell differentiation and physiology</td>
+<td><span class="math inline">\(^{19}\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs3680448</td>
+<td>14:81934085</td>
+<td>ALY</td>
+<td>BAS</td>
+<td>0.036</td>
+<td>0.65</td>
+<td>1.78e-8</td>
+<td>1.1e-07</td>
+<td>Tdrd3</td>
+<td>abnormal B cell differentiation and physiology</td>
+<td><span class="math inline">\(^{19}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs4173870</td>
+<td>16:35764290</td>
+<td>MCH</td>
+<td>MCV</td>
+<td>0.14</td>
+<td>0.71</td>
+<td>1.20e-11</td>
+<td>4.89e-10</td>
+<td>Hcls1</td>
+<td>differentiation of erythrocytes</td>
+<td><span class="math inline">\(^7\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs4212102</td>
+<td>16:84204704</td>
+<td>PLT</td>
+<td>WBC</td>
+<td>0.17</td>
+<td>0.35</td>
+<td>1.16e-10</td>
+<td>2.44e-9</td>
+<td>App</td>
+<td>increased susceptibility to induced thrombosis</td>
+<td><span class="math inline">\(^{20,11}\)</span></td>
+</tr>
+<tr class="even">
+<td>rs4212186</td>
+<td>16:84273330</td>
+<td>PLT</td>
+<td>WBC</td>
+<td>0.17</td>
+<td>0.36</td>
+<td>5.88e-11</td>
+<td>1.31e-9</td>
+<td>App</td>
+<td>increased susceptibility to induced thrombosis</td>
+<td><span class="math inline">\(^{20,11}\)</span></td>
+</tr>
+<tr class="odd">
+<td>rs3711994</td>
+<td>19:45078018</td>
+<td>ALY</td>
+<td>LYM</td>
+<td>3.71e-4</td>
+<td>0.10</td>
+<td>1.04e-12</td>
+<td>2.80e-14</td>
+<td>Btrc</td>
+<td>abnormal lymphocyte morphology</td>
+<td><span class="math inline">\(^{21}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In the first two columns, we list SNPs and their genetic location
+according to the mouse assembly NCBI build 34 (accessed from <span class="math inline">\(^{21}\)</span>) in the format
+<code>Chromosome:Basepair</code>. Next, we give the results stemming
+from univariate analyses on traits 1 and 2, respectively, the covariance
+(cov) test, and the overall <span class="math inline">\(P\)</span>-value
+derived by mvMAPIT using Fisher’s method. The last columns detail the
+closest neighboring genes found using the Mouse Genome Informatics
+database<span class="math inline">\(^4\)</span> <span class="math inline">\(^5\)</span> <span class="math inline">\(^6\)</span>, a short summary of the suggested
+annotated function for those genes, and the reference to the source of
+the annotation.</p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>1: William Valdar, Jonathan Flint, and Richard Mott. Simulating the
+collaborative cross: power of quantitative trait loci detection and
+mapping resolution in large sets of recombinant inbred strains of mice.
+Genetics, 172(3):1783–1797, 2006. ISSN 0016-6731. <a href="https://doi.org/10.1534/genetics.104.039313" class="uri">https://doi.org/10.1534/genetics.104.039313</a>.</p>
+<p>2: William Valdar, Leah C. Solberg, Dominique Gauguier, Stephanie
+Burnett, Paul Klenerman, William O. Cookson, Martin S. Taylor, J.
+Nicholas P. Rawlins, Richard Mott, and Jonathan Flint. Genome-wide
+genetic association of complex traits in heterogeneous stock mice.
+Nature Genetics, 38(8):879–887, 2006. ISSN 1546-1718. <a href="https://doi.org/10.1038/ng1840" class="uri">https://doi.org/10.1038/ng1840</a>.</p>
+<p>3: Wellcome trust centre for human genetics - mouse resources. URL <a href="http://mtweb.cs.ucl.ac.uk/mus/www/mouse/index.shtml" class="uri">http://mtweb.cs.ucl.ac.uk/mus/www/mouse/index.shtml</a>.</p>
+<p>4: Judith A Blake, Richard Baldarelli, James A Kadin, Joel E
+Richardson, Cynthia L Smith, and Carol J Bult. Mouse genome database
+(MGD): Knowledgebase for mouse–human comparative biology. Nucleic Acids
+Research, 49:D981–D987, 2020. ISSN 0305-1048. <a href="https://doi.org/10.1093/nar/gkaa1083" class="uri">https://doi.org/10.1093/nar/gkaa1083</a>.</p>
+<p>5: Cynthia L. Smith and Janan T. Eppig. The mammalian phenotype
+ontology: enabling robust annotation and comparative analysis. Wiley
+Interdisciplinary Reviews. Systems Biology and Medicine, 1(3):390–399,
+2009. ISSN 1939-005X. <a href="https://doi.org/10.1002/wsbm.44" class="uri">https://doi.org/10.1002/wsbm.44</a>.</p>
+<p>6: Mouse Genome Informatics database <a href="http://www.informatics.jax.org" class="uri">http://www.informatics.jax.org</a></p>
+<p>7: Karla F. Castro-Ochoa, Idaira M. Guerrero-Fonseca, and Michael
+Schnoor. Hematopoietic cell specific lyn substrate (HCLS1 or HS1): A
+versatile actin-binding protein in leukocytes. Journal of Leukocyte
+Biology, 105(5):881–890, 2019. ISSN 1938-3673. doi:
+10.1002/JLB.MR0618-212R.</p>
+<p>8: Obtaining and loading phenotype annotations from the international
+mouse phenotyping consortium (IMPC) database. Mouse Genome Informatics
+and the International Mouse Phenotyping Consortium, 2014. URL <a href="http://www.informatics.jax.org/reference/J:211773" class="uri">http://www.informatics.jax.org/reference/J:211773</a>.</p>
+<p>9: Marc H. G. P. Raaijmakers, Siddhartha Mukherjee, Shangqin Guo,
+Siyi Zhang, Tatsuya Kobayashi, Jesse A. Schoonmaker, Benjamin L. Ebert,
+Fatima Al-Shahrour, Robert P. Hasserjian, Edward O. Scadden, Zinmar
+Aung, Marc Matza, Matthias Merkenschlager, Charles Lin, Johanna M.
+Rommens, and David T. Scadden. Bone progenitor dysfunction induces
+myelodysplasia and secondary leukaemia. Nature, 464(7290):852–857, 2010.
+ISSN 1476-4687. doi: 10.1038/nature08851. URL <a href="https://www.nature.com/articles/nature08851" class="uri">https://www.nature.com/articles/nature08851</a>. Number:
+7290 Publisher: Nature Publishing Group.</p>
+<p>10: Jill M. Norris and Stephen S. Rich. Genetics of glucose
+homeostasis. Arteriosclerosis, Thrombosis, and Vascular Biology,
+32(9):2091–2096, 2012. doi: 10.1161/ATVBAHA.112.255463. URL <a href="https://www.ahajournals.org/doi/10.1161/ATVBAHA.112.255463" class="uri">https://www.ahajournals.org/doi/10.1161/ATVBAHA.112.255463</a>.
+Publisher: American Heart Association.</p>
+<p>11: Juan Carlos Souto, Laura Almasy, Montserrat Borrell, Francisco
+Blanco-Vaca, José Mateo, José Manuel Soria, Inma Coll, Rosa Felices,
+William Stone, Jordi Fontcuberta, and John Blangero. Genetic
+susceptibility to thrombosis and its relationship to physiological risk
+factors: The GAIT study. The American Journal of Human Genetics,
+67(6):1452–1459, 2000. ISSN 0002-9297. doi: 10.1086/316903. URL <a href="https://www.sciencedirect.com/science/article/pii/S0002929707632145" class="uri">https://www.sciencedirect.com/science/article/pii/S0002929707632145</a>.</p>
+<p>12: Joachim Weischenfeldt, Inge Damgaard, David Bryder, Kim
+Theilgaard-Mönch, Lina A. Thoren, Finn Cilius Nielsen, Sten Eirik W.
+Jacobsen, Claus Nerlov, and Bo Torben Porse. NMD is essential for
+hematopoietic stem and progenitor cells and for eliminating by-products
+of programmed DNA rearrangements. Genes &amp; Development,
+22(10):1381–1396, 2008. ISSN 0890-9369, 1549-5477. doi:
+10.1101/gad.468808. URL <a href="http://genesdev.cshlp.org/content/22/10/1381" class="uri">http://genesdev.cshlp.org/content/22/10/1381</a>. Company:
+Cold Spring Harbor Laboratory Press Distributor: Cold Spring Harbor
+Laboratory Press Institution: Cold Spring Harbor Laboratory Press Label:
+Cold Spring Harbor Laboratory Press Publisher: Cold Spring Harbor
+Lab.</p>
+<p>13: Kevin Berendse, Maxim Boek, Marion Gijbels, Nicole N. Van der
+Wel, Femke C. Klouwer, Marius A. van den Bergh-Weerman, Abhijit Babaji
+Shinde, Rob Ofman, Bwee Tien Poll-The, Sander M. Houten, Myriam Baes,
+Ronald J. A. Wanders, and Hans R. Waterham. Liver disease predominates
+in a mouse model for mild human zellweger spectrum disorder. Biochimica
+et Biophysica Acta (BBA) - Molecular Basis of Disease,
+1865(10):2774–2787, 2019. ISSN 0925-4439. doi:
+10.1016/j.bbadis.2019.06.013. URL <a href="https://www.sciencedirect.com/science/article/pii/S0925443919302121" class="uri">https://www.sciencedirect.com/science/article/pii/S0925443919302121</a>.</p>
+<p>14: Patricia Isnard, Nathalie Coré, Philippe Naquet, and Malek
+Djabali. Altered lymphoid development in mice deficient for the mAF4
+proto-oncogene. Blood, 96(2):705–710, 2000. ISSN 0006-4971. doi:
+10.1182/blood.V96.2.705. URL <a href="https://doi.org/10.1182/blood.V96.2.705" class="uri">https://doi.org/10.1182/blood.V96.2.705</a>.</p>
+<p>15: Xiaoming Feng, Gregory C. Ippolito, Lifeng Tian, Karla Wiehagen,
+Soyoung Oh, Arivazhagan Sambandam, Jessica Willen, Ralph M. Bunte,
+Shanna D. Maika, June V. Harriss, Andrew J. Caton, Avinash Bhandoola,
+Philip W. Tucker, and Hui Hu. Foxp1 is an essential transcriptional
+regulator for the generation of quiescent naive t cells during thymocyte
+development. Blood, 115(3):510–518, 2010. ISSN 0006-4971. doi:
+10.1182/blood-2009-07-232694. URL <a href="https://doi.org/10.1182/blood-2009-07-232694" class="uri">https://doi.org/10.1182/blood-2009-07-232694</a>.</p>
+<p>16: 1451 Hui Hu, Bin Wang, Madhuri Borde, Julie Nardone, Shan Maika,
+Laura Allred, Philip W. Tucker, and Anjana Rao. Foxp1 is an essential
+transcriptional regulator of b cell development. Nature Immunology,
+7(8):819–826, 2006. ISSN 1529-2916. doi: 10.1038/ni1358. URL <a href="https://www.nature.com/articles/ni1358" class="uri">https://www.nature.com/articles/ni1358</a>. Number: 8
+Publisher: Nature Publishing Group.</p>
+<p>17: Monika Mortensen, Elizabeth J. Soilleux, Gordana Djordjevic,
+Rebecca Tripp, Michael Lutteropp, Elham Sadighi-Akha, Amanda J. Stranks,
+Julie Glanville, Samantha Knight, Sten-Eirik W. Jacobsen, Kamil R.
+Kranc, and Anna Katharina Simon. The autophagy protein atg7 is essential
+for hematopoietic stem cell maintenance. Journal of Experimental
+Medicine, 208(3):455–467, 2011. ISSN 0022-1007. doi:
+10.1084/jem.20101145. URL <a href="https://doi.org/10.1084/jem.20101145" class="uri">https://doi.org/10.1084/jem.20101145</a>.</p>
+<p>18: Alexander J. Clarke, Ursula Ellinghaus, Andrea Cortini, Amanda
+Stranks, Anna Katharina Simon, Marina Botto, and Timothy J. Vyse.
+Autophagy is activated in systemic lupus erythematosus and required for
+plasmablast development. Annals of the Rheumatic Diseases,
+74(5):912–920, 2015. ISSN 0003-4967, 1468-2060. doi:
+10.1136/annrheumdis-2013-204343. URL <a href="https://ard.bmj.com/content/74/5/912" class="uri">https://ard.bmj.com/content/74/5/912</a>. Publisher: BMJ
+Publishing Group Ltd Section: Basic and translational research.</p>
+<p>19: Yanzhong Yang, Kevin M. McBride, Sean Hensley, Yue Lu, Frederic
+Chedin, and Mark T. Bedford. Arginine methylation facilitates the
+recruitment of TOP3b to chromatin to prevent r loop accumu lation.
+Molecular Cell, 53(3):484–497, 2014. ISSN 1097-2765. doi:
+10.1016/j.molcel.2014.01.011. URL <a href="https://www.sciencedirect.com/science/article/pii/S1097276514000434" class="uri">https://www.sciencedirect.com/science/article/pii/S1097276514000434</a>.</p>
+<p>20: Feng Xu, Judianne Davis, Michael Hoos, andWilliam E. Van
+Nostrand. Mutation of the kunitz-typeproteinase inhibitor domain in the
+amyloid-protein precursor abolishes its anti-thrombotic properties in
+vivo. Thrombosis Research, 155:58–64, 2017. ISSN 0049-3848. doi:
+10.1016/j.thromres.2017.05.003. URL <a href="https://www.sciencedirect.com/science/article/pii/S0049384817303110" class="uri">https://www.sciencedirect.com/science/article/pii/S0049384817303110</a>.</p>
+<p>21: Keiko Nakayama, Shigetsugu Hatakeyama, Shun-ichiro Maruyama,
+Akira Kikuchi, Kazunori Onoé, Robert A. Good, and Keiichi I. Nakayama.
+Impaired degradation of inhibitory subunit of NF-b (IkappaB) and
+-catenin as a result of targeted disruption of the -TrCP1 gene.
+Proceedings of the National Academy of Sciences, 100(15):8752–8757,
+2003. doi: 10.1073/pnas.1133216100. URL <a href="https://www.pnas.org/doi/full/10.1073/pnas.1133216100" class="uri">https://www.pnas.org/doi/full/10.1073/pnas.1133216100</a>.
+Publisher: Proceedings of the National Academy of Sciences.</p>
+<p>22: Sagiv Shifman, 1480 Jordana Tzenova Bell, Richard R. Copley,
+Martin S. Taylor, Robert W. Williams, Richard Mott, and Jonathan Flint.
+A high-resolution single nucleotide polymorphism genetic map of the
+mouse genome. PLOS Biology, 4(12):e395, 2006. ISSN 1545-7885. doi:
+10.1371/journal. pbio.0040395. URL <a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040395" class="uri">https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040395</a>.
+Publisher: Public Library of Science.</p>
+<p>23: Stamp, Julian, 2022, “Leveraging the Genetic Correlation between
+Traits Improves the Detection of Epistasis in Genome-wide Association
+Studies”, <a href="https://doi.org/10.7910/DVN/WPFIGU" class="uri">https://doi.org/10.7910/DVN/WPFIGU</a>, Harvard Dataverse,
+V1</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
