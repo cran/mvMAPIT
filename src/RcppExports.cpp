@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // MAPITCpp
 Rcpp::List MAPITCpp(const arma::mat X, const arma::mat Y, Rcpp::Nullable<Rcpp::NumericMatrix> Z, Rcpp::Nullable<Rcpp::NumericMatrix> C, Rcpp::Nullable<Rcpp::NumericVector> variantIndices, std::string testMethod, int cores, Rcpp::Nullable<Rcpp::NumericMatrix> GeneticSimilarityMatrix);
 RcppExport SEXP _mvMAPIT_MAPITCpp(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP CSEXP, SEXP variantIndicesSEXP, SEXP testMethodSEXP, SEXP coresSEXP, SEXP GeneticSimilarityMatrixSEXP) {
@@ -25,11 +30,11 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport SEXP run_testthat_tests();
+RcppExport SEXP run_testthat_tests(SEXP use_xml_sxp);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mvMAPIT_MAPITCpp", (DL_FUNC) &_mvMAPIT_MAPITCpp, 8},
-    {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
+    {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 1},
     {NULL, NULL, 0}
 };
 

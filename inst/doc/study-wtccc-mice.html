@@ -119,13 +119,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -334,9 +341,9 @@ epistatic signal in stock of mice</h1>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvMAPIT)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(mvMAPIT)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <blockquote>
 <p><strong>NOTE:</strong> Due to the size of the data, this vignette
 does not contain the output of the code.</p>
@@ -394,11 +401,11 @@ each trait and trait pair containing the genotype data in a genotype
 matrix encoded as <code>{0, 1, 2}</code> (minor allele count) and the
 trait or trait pair in a phenotype matrix. Apply <code>mvmapit()</code>
 to each data set by running the following.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mvmapit_TRAIT <span class="ot">&lt;-</span> <span class="fu">mvmapit</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>genotype),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>phenotype),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">test =</span> <span class="st">&quot;hybrid&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>mvmapit_TRAIT <span class="ot">&lt;-</span> <span class="fu">mvmapit</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>genotype),</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">t</span>(TRAIT<span class="sc">$</span>phenotype),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">test =</span> <span class="st">&quot;hybrid&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>As a result, we get redundant <span class="math inline">\(P\)</span>-values for some of the univariate
 variance components. The statistical detection of epistasis is sensitive
 to sample size. Therefore, we coalesce the redundant data by keeping the
@@ -416,8 +423,8 @@ this vignette, download the two files</p>
 <li>mice_SI_paper.rds</li>
 </ul>
 <p>and read the files using the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mice_SI_paper <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_SI_paper.rds&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mice_HCTHGB_MCVMCH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_HCTHGB_MCVMCH.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>mice_SI_paper <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_SI_paper.rds&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>mice_HCTHGB_MCVMCH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;mice_HCTHGB_MCVMCH.rds&quot;</span>)</span></code></pre></div>
 </div>
 <div id="all-traits-overview" class="section level2">
 <h2>All Traits Overview</h2>
@@ -430,47 +437,47 @@ Manhattan plots of our genome-wide interaction study for all
 combinations of trait pairs. Here, we can see that most of the signal in
 the combined <span class="math inline">\(P\)</span>-values from mvMAPIT
 likely stems from the covariance component portion of the model.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>for_ticks_chr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(position <span class="sc">~</span> chr, mice_data<span class="sc">$</span>fisher, <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">first =</span> <span class="fu">min</span>(x), <span class="at">last =</span> <span class="fu">max</span>(x))) <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tick =</span> <span class="fu">floor</span>((position[,<span class="st">&quot;first&quot;</span>] <span class="sc">+</span> position[,<span class="st">&quot;last&quot;</span>]) <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chr2 =</span> <span class="fu">case_when</span>(chr <span class="sc">%%</span> <span class="dv">5</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                          chr <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>for_facetgrid_row <span class="ot">&lt;-</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #1&quot;</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #2&quot;</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Covariance&quot;</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Combined&quot;</span>))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_SI_paper<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(x <span class="sc">~</span> y) <span class="sc">+</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>for_ticks_chr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(position <span class="sc">~</span> chr, mice_data<span class="sc">$</span>fisher, <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">first =</span> <span class="fu">min</span>(x), <span class="at">last =</span> <span class="fu">max</span>(x))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tick =</span> <span class="fu">floor</span>((position[,<span class="st">&quot;first&quot;</span>] <span class="sc">+</span> position[,<span class="st">&quot;last&quot;</span>]) <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chr2 =</span> <span class="fu">case_when</span>(chr <span class="sc">%%</span> <span class="dv">5</span> <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                          chr <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="fu">as.character</span>(chr),</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>for_facetgrid_row <span class="ot">&lt;-</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #1&quot;</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Trait #2&quot;</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Covariance&quot;</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Combined&quot;</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_SI_paper<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    )) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>        ),</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>      <span class="fu">facet_grid</span>(x <span class="sc">~</span> y) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
 </div>
 <div id="two-trait-pairs-hct-hgb-as-well-as-mcv-mch" class="section level2">
 <h2>Two trait pairs HCT &amp; HGB as well as MCV &amp; MCH</h2>
@@ -479,41 +486,41 @@ the covariance component portion of the model holds true for the joint
 pairwise analysis of hematocrit (HCT) and hemoglobin (HGB) and mean
 corpuscular hemoglobin (MCH) and mean corpuscular volume (MCV) (e.g.,
 see the third and fourth rows of the following figure).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_HCTHGB_MCVMCH<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(row <span class="sc">~</span> case, <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">row =</span> for_facetgrid_row)) <span class="sc">+</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>gg <span class="ot">&lt;-</span> mice_HCTHGB_MCVMCH<span class="sc">$</span>fisher <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>      <span class="at">x =</span> position,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>      <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(pplot),</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">factor</span>(color)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    )) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>      <span class="fu">geom_point_rast</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#8b8b8b&quot;</span>, <span class="st">&quot;#bfbfbf&quot;</span>, <span class="st">&quot;#1b9e77&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;&gt;10&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>      <span class="fu">geom_hline</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>        <span class="fu">aes</span>(</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>          <span class="at">yintercept =</span> <span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5.179737e-06</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;Bonferroni&quot;</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>        ),</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;#d95f02&quot;</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.3</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>      <span class="fu">facet_grid</span>(row <span class="sc">~</span> case, <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">row =</span> for_facetgrid_row)) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>),</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>        <span class="at">y =</span> <span class="fu">bquote</span>(<span class="sc">-</span>log[<span class="dv">10</span>](p)),</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Chromosome&quot;</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>                         <span class="at">breaks =</span> for_ticks_chr<span class="sc">$</span>tick,</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>                         <span class="at">labels =</span> for_ticks_chr<span class="sc">$</span>chr2) <span class="sc">+</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>      <span class="fu">scale_linetype_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;dashed&#39;</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="fu">show</span>(gg)</span></code></pre></div>
 <p>One explanation for observing more signal in the covariance
 components over the univariate test could be derived from the traits
 having low heritability but high correlation between epistatic

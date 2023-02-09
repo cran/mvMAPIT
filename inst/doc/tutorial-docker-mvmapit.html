@@ -119,13 +119,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -348,8 +355,8 @@ required for being able to follow this tutorial.</p>
 <p>The github repository of <a href="https://github.com/lcrawlab/mvMAPIT/">mvMAPIT</a> already comes
 with a <code>Dockerfile</code>. To build the image, clone the github
 repository and run the following commands.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> mvMAPIT</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> mvmapit .</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="bu">cd</span> mvMAPIT</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> mvmapit .</span></code></pre></div>
 <p>This will produce an image named <code>mvmapit</code> that contains
 <code>Rstudio</code>, <code>mvMAPIT</code>, and all dependencies.</p>
 </div>
@@ -357,26 +364,26 @@ repository and run the following commands.</p>
 <h2>Run the mvMAPIT Image</h2>
 <p>With a local copy of the docker image <code>mvmapit</code> available,
 run the following code.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-ti</span> <span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-e</span> DISABLE_AUTH=true <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-p</span> 8787:8787 <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--name</span> my_container <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mvmapit</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-ti</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="at">-e</span> DISABLE_AUTH=true <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">-p</span> 8787:8787 <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">--name</span> my_container <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    mvmapit</span></code></pre></div>
 <p>This will start the docker container that serves an RStudio
 application at <code>localhost:8787</code>. In this container,
 <code>mvMAPIT</code> is already installed and can be imported and run in
 the R console via the following code.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvMAPIT)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mvmapit</span>(<span class="fu">t</span>(simulated_data<span class="sc">$</span>genotype[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">t</span>(simulated_data<span class="sc">$</span>trait[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,]),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">logLevel =</span> <span class="st">&quot;DEBUG&quot;</span>)</span></code></pre></div>
-<pre><code>## 2022-12-02 12:00:53 DEBUG:mvmapit:Running in normal test mode.
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Genotype matrix: 10 x 100
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Phenotype matrix: 2 x 100
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Number of zero variance variants: 0
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Genotype matrix after removing zero variance variants: 10 x 100
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Scale X matrix appropriately.
-## 2022-12-02 12:00:53 DEBUG:mvmapit:Calculated mean time of execution. Return list.</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(mvMAPIT)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">mvmapit</span>(<span class="fu">t</span>(simulated_data<span class="sc">$</span>genotype[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>        <span class="fu">t</span>(simulated_data<span class="sc">$</span>trait[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,]),</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>        <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">logLevel =</span> <span class="st">&quot;DEBUG&quot;</span>)</span></code></pre></div>
+<pre><code>## 2023-02-06 12:07:09 DEBUG:mvmapit:Running in normal test mode.
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Genotype matrix: 10 x 100
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Phenotype matrix: 2 x 100
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Number of zero variance variants: 0
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Genotype matrix after removing zero variance variants: 10 x 100
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Scale X matrix appropriately.
+## 2023-02-06 12:07:09 DEBUG:mvmapit:Calculated mean time of execution. Return list.</code></pre>
 <pre><code>## $pvalues
 ## # A tibble: 30 × 3
 ##    id        trait         p
@@ -411,12 +418,12 @@ the R console via the following code.</p>
 ## 
 ## $duration
 ##       process duration_ms
-## 1         cov           0
-## 2 projections           0
-## 3   vectorize           0
-## 4           q           1
-## 5           S           0
-## 6          vc           0</code></pre>
+## 1         cov         0.0
+## 2 projections         0.0
+## 3   vectorize         0.0
+## 4           q         0.0
+## 5           S         0.0
+## 6          vc         1.1</code></pre>
 </div>
 
 
