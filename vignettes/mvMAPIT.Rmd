@@ -1,12 +1,12 @@
 ---
-title: "Illustrating mvMAPIT with Simulated Data"
+title: "Illustrating multivariate MAPIT with Simulated Data"
 author: "Julian Stamp"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
-  Learn how to analyze data with mvMAPIT.
+  Learn how to test quantitative traits and genetics data for epistasis with multivariate MAPIT.
 vignette: >
-  %\VignetteIndexEntry{Illustrating mvMAPIT with Simulated Data}
+  %\VignetteIndexEntry{Illustrating multivariate MAPIT with Simulated Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,17 +23,17 @@ library(knitr)
 
 ### Please Cite Us
 
-If you use mvMAPIT in published research, please cite:
+If you use multivariate MAPIT in published research, please cite:
 
 > * Crawford L, Zeng P, Mukherjee S, & Zhou X (2017). Detecting epistasis
 >   with the marginal epistasis test in genetic mapping studies of quantitative
 >   traits. PLoS genetics, 13(7), e1006869.
 >   <https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006869>
 >
-> * Stamp J, DenAdel A, Weinreich D, Crawford, L (2022). Leveraging the
+> * Stamp J, DenAdel A, Weinreich D, Crawford, L (2023). Leveraging the
 >    Genetic Correlation between Traits Improves the Detection of Epistasis in
->    Genome-wide Association Studies. bioRxiv 2022.11.30.518547; doi:
->    <https://doi.org/10.1101/2022.11.30.518547>
+>    Genome-wide Association Studies. G3 Genes|Genomes|Genetics 13(8), jkad118; doi:
+>    <https://doi.org/10.1093/g3journal/jkad118>
 >
 > * Stamp J, Crawford L (2022). mvMAPIT: Multivariate Genome Wide Marginal
 >   Epistasis Test. <https://github.com/lcrawlab/mvMAPIT>,

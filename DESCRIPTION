@@ -1,7 +1,7 @@
 Type: Package
 Package: mvMAPIT
 Title: Multivariate Genome Wide Marginal Epistasis Test
-Version: 2.0.1
+Version: 2.0.2
 URL: https://github.com/lcrawlab/mvMAPIT,
         https://lcrawlab.github.io/mvMAPIT/
 Authors@R: c(
@@ -33,23 +33,24 @@ Description: Epistasis, commonly defined as the interaction between genetic
   approximations, our proposed approach is scalable to moderately sized
   genome-wide association studies.
   Crawford et al. (2017) <doi:10.1371/journal.pgen.1006869>.
-  Stamp et al. (2022) <doi:10.1101/2022.11.30.518547>.
+  Stamp et al. (2023) <doi:10.1093/g3journal/jkad118>.
 License: GPL (>= 3)
 Depends: R (>= 3.5)
 Imports: checkmate, CompQuadForm, dplyr, foreach, harmonicmeanp,
         logging, mvtnorm, Rcpp, stats, tidyr, utils
-Suggests: ggplot2, ggrepel, kableExtra, knitr, markdown, RcppAlgos,
-        rmarkdown, testthat
-LinkingTo: Rcpp, RcppArmadillo, RcppParallel, RcppSpdlog, testthat
+Suggests: GGally, ggplot2, ggrepel, kableExtra, knitr, markdown,
+        RcppAlgos, rmarkdown, testthat
+LinkingTo: Rcpp, RcppArmadillo, RcppParallel, RcppProgress, RcppSpdlog,
+        testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-02-06 17:07:10 UTC; jds
+Packaged: 2023-09-21 22:56:03 UTC; jds
 Author: Julian Stamp [cre, aut] (<https://orcid.org/0000-0003-3014-6249>),
   Lorin Crawford [aut] (<https://orcid.org/0000-0003-0178-8242>)
 Maintainer: Julian Stamp <julian_stamp@brown.edu>
 Repository: CRAN
-Date/Publication: 2023-02-09 10:40:02 UTC
+Date/Publication: 2023-09-22 07:10:08 UTC

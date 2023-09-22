@@ -253,6 +253,40 @@ test_that(
 )
 
 test_that(
+    "pleiotropic step runs for n_pleiotropic %in% c(1, 2).",
+    {
+        # given
+        edge_case_input_1 <- 1
+        edge_case_input_2 <- 2
+        p <- 50
+        f <- 30
+        g <- 0
+        n <- 5
+        d <- 3
+        X <- matrix(
+            runif(p * n),
+            ncol = p
+        )
+        total_causal <- (f)  # single trait SNPs plus pleiotropic SNPs
+        correct_1 <- NULL
+        correct_2 <- d * edge_case_input_2
+
+        # when
+        data_1 <- simulate_traits(
+            X, n_causal = f, n_trait_specific = g, n_pleiotropic = edge_case_input_1, d = d, group_ratio_trait = 3,
+            group_ratio_pleiotropic = 4, maf_threshold = 0, logLevel = "ERROR"
+        )
+        data_2 <- simulate_traits(
+            X, n_causal = f, n_trait_specific = g, n_pleiotropic = edge_case_input_2, d = d, group_ratio_trait = 3,
+            group_ratio_pleiotropic = 4, maf_threshold = 0, logLevel = "ERROR"
+        )
+        # then
+        expect_equal(nrow(data_1$epistatic), correct_1)
+        expect_equal(nrow(data_2$epistatic), correct_2)
+    }
+)
+
+test_that(
     "test varying heiritability", {
         # given
         ind <- 100
@@ -279,6 +313,40 @@ test_that(
 
         # then
         expect_equal(res$value, H2)
+    }
+)
+
+test_that(
+    "simulate_traits modifies snp names of epistatic snps.", {
+        # given
+        p <- 50
+        f <- 30
+        g <- 5
+        h <- 10
+        n <- 5
+        d <- 3
+        X <- matrix(
+            runif(p * n),
+            ncol = p
+        )
+        total_causal <- (f)  # single trait SNPs plus pleiotropic SNPs
+        correct_1 <- h + g
+        correct_2 <- h + g
+        correct_3 <- h + g
+
+        # when
+        data <- simulate_traits(
+            X, n_causal = f, n_trait_specific = g, n_pleiotropic = h, d = d, group_ratio_trait = 3,
+            group_ratio_pleiotropic = 4, maf_threshold = 0, logLevel = "ERROR"
+        )
+        snp_names <- colnames(data$genotype)
+        epistatic_trait1 <- snp_names[grepl("p01epi", snp_names)]
+        epistatic_trait2 <- snp_names[grepl("p02epi", snp_names)]
+        epistatic_trait3 <- snp_names[grepl("p03epi", snp_names)]
+        # then
+        expect_equal(length(epistatic_trait1), correct_1)
+        expect_equal(length(epistatic_trait2), correct_2)
+        expect_equal(length(epistatic_trait3), correct_3)
     }
 )
 

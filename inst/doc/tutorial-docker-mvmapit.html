@@ -377,13 +377,14 @@ the R console via the following code.</p>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">mvmapit</span>(<span class="fu">t</span>(simulated_data<span class="sc">$</span>genotype[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]),</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>        <span class="fu">t</span>(simulated_data<span class="sc">$</span>trait[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,]),</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>        <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">logLevel =</span> <span class="st">&quot;DEBUG&quot;</span>)</span></code></pre></div>
-<pre><code>## 2023-02-06 12:07:09 DEBUG:mvmapit:Running in normal test mode.
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Genotype matrix: 10 x 100
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Phenotype matrix: 2 x 100
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Number of zero variance variants: 0
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Genotype matrix after removing zero variance variants: 10 x 100
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Scale X matrix appropriately.
-## 2023-02-06 12:07:09 DEBUG:mvmapit:Calculated mean time of execution. Return list.</code></pre>
+<pre><code>## 2023-09-21 18:56:03.158589 DEBUG:mvmapit:Running in normal test mode.
+## 2023-09-21 18:56:03.161717 DEBUG:mvmapit:Genotype matrix: 10 x 100
+## 2023-09-21 18:56:03.164429 DEBUG:mvmapit:Phenotype matrix: 2 x 100
+## 2023-09-21 18:56:03.16474 DEBUG:mvmapit:Number of zero variance variants: 0
+## 2023-09-21 18:56:03.165049 DEBUG:mvmapit:Genotype matrix after removing zero variance variants: 10 x 100
+## 2023-09-21 18:56:03.165249 DEBUG:mvmapit:Scale X matrix appropriately.
+## 2023-09-21 18:56:03.165661 INFO:mvmapit:Running normal C++ routine.
+## 2023-09-21 18:56:03.181923 DEBUG:mvmapit:Calculated mean time of execution. Return list.</code></pre>
 <pre><code>## $pvalues
 ## # A tibble: 30 × 3
 ##    id        trait         p
@@ -398,7 +399,7 @@ the R console via the following code.</p>
 ##  8 snp_00003 p_02*p_01 0.536
 ##  9 snp_00003 p_02*p_02 0.140
 ## 10 snp_00004 p_01*p_01 0.688
-## # … with 20 more rows
+## # ℹ 20 more rows
 ## 
 ## $pves
 ## # A tibble: 30 × 3
@@ -414,16 +415,16 @@ the R console via the following code.</p>
 ##  8 snp_00003 p_02*p_01  0.0493 
 ##  9 snp_00003 p_02*p_02 -0.0400 
 ## 10 snp_00004 p_01*p_01 -0.0146 
-## # … with 20 more rows
+## # ℹ 20 more rows
 ## 
 ## $duration
 ##       process duration_ms
-## 1         cov         0.0
-## 2 projections         0.0
-## 3   vectorize         0.0
-## 4           q         0.0
-## 5           S         0.0
-## 6          vc         1.1</code></pre>
+## 1         cov         NaN
+## 2 projections         NaN
+## 3   vectorize         NaN
+## 4           q         NaN
+## 5           S         NaN
+## 6          vc         NaN</code></pre>
 </div>
 
 

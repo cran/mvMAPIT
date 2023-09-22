@@ -124,8 +124,8 @@ simulate_traits <- function(
 
     pleiotropic_set <- sample(snp.ids.filtered, n_pleiotropic, replace = F)  # declare peleiotropic SNPs before since they have to be present in every trait
     pleio_split <- split(pleiotropic_set, f = f_pleiotropic)
-    X_pleio_group1 <- X[, pleio_split$group1]
-    X_pleio_group2 <- X[, pleio_split$group2]
+    X_pleio_group1 <- X[, pleio_split$group1, drop=FALSE]
+    X_pleio_group2 <- X[, pleio_split$group2, drop=FALSE]
     i <- NULL
     X_epi_pleio <- foreach(i = seq_len(n_group1_pleiotropic), .combine = cbind) %do% {
             # this step fails if there are too little pleiotropic SNPs; i.e. <=
@@ -182,13 +182,16 @@ simulate_traits <- function(
     interactions <- tibble()
     additive <- tibble()
 
+    colnames(genotype_matrix) <- seq_len(ncol(genotype_matrix)) %>%
+        sprintf(fmt = "snp_%05d")  # column names names for SNPs
+
     for (j in 1:d) {
         ## select causal SNPs
         log$debug("Simulating trait %d", j)
         causal_snps_j <- sample(snp.ids.trait, n_causal - n_pleiotropic, replace = F)
         trait_specific_additive <- c(causal_snps_j, pleiotropic_set)
-        trait_specific_snps <- sample(causal_snps_j, n_trait_specific, replace = F)
-        trait_grouped <- split(trait_specific_snps, f_trait)
+        trait_specific_epistatic <- sample(causal_snps_j, n_trait_specific, replace = F)
+        trait_grouped <- split(trait_specific_epistatic, f_trait)
         trait_specific_j_1 <- trait_grouped$group1
         trait_specific_j_2 <- trait_grouped$group2
         log$debug("Length causal set: %d", length(causal_snps_j))
@@ -202,8 +205,8 @@ simulate_traits <- function(
 
         # create trait_specific interaction matrix
         X_causal_j <- X[, c(causal_snps_j, pleiotropic_set)]  # all SNPs have additive effects
-        X_trait_specific_j_1 <- X[, trait_specific_j_1]
-        X_trait_specific_j_2 <- X[, trait_specific_j_2]
+        X_trait_specific_j_1 <- X[, trait_specific_j_1, drop = FALSE]
+        X_trait_specific_j_2 <- X[, trait_specific_j_2, drop = FALSE]
 
         trait_specific_interactions <- tibble(
             group1 = rep(trait_specific_j_1, each = length(trait_specific_j_2)),
@@ -253,6 +256,14 @@ simulate_traits <- function(
             trait = j
         )
         additive <- bind_rows(additive, trait_additive)
+        epistatic_idx <- c(pleiotropic_set, trait_specific_epistatic)
+        additive_idx <- c(pleiotropic_set, trait_specific_additive)
+        colnames(genotype_matrix)[additive_idx] <- paste0(colnames(genotype_matrix[, additive_idx]),
+                                               rep(sprintf(j, fmt = "_p%02dadd"),
+                                               length(additive_idx)))
+        colnames(genotype_matrix)[epistatic_idx] <- paste0(colnames(genotype_matrix[, epistatic_idx]),
+                                               rep(sprintf(j, fmt = "_p%02depi"),
+                                               length(epistatic_idx)))
 
         # unexplained phenotypic variation
         y_err <- error[, j]
@@ -284,8 +295,6 @@ simulate_traits <- function(
         interactions <- NULL
     }
 
-    colnames(genotype_matrix) <- seq_len(ncol(genotype_matrix)) %>%
-        sprintf(fmt = "snp_%05d")  # column names names for SNPs
     colnames(Y) <- seq_len(ncol(Y)) %>%
         sprintf(fmt = "p_%02d")  # column names names for traits
 
