@@ -1,6 +1,6 @@
-2a7e1d7f368f764f4a1a48c8b8dcedaa *DESCRIPTION
+c6b7c2ec7da37049f417417c6b15c996 *DESCRIPTION
 7fc94dec9da51a19d48e5a1605e5419c *NAMESPACE
-57c6b52623a16fd1938490ebcf21f7b5 *NEWS.md
+9fc283e03138ec66229cac9cd6db1bac *NEWS.md
 2337c7344c8823c52e0dad09b21065fc *R/MAPIT.R
 683953495f17f6e793fbfd46c079f9c7 *R/RcppExports.R
 0ef8d974fcfd25f6a3867969439bfbaa *R/catch-routine-registration.R
@@ -17,10 +17,10 @@ d097cc77ce9a462bbdc08d7a884c593a *data/mvmapit_data.rda
 10605df022d315230841e1727fd6ee42 *data/simulated_data.rda
 467b30fb62126a76fea24892d52a34e8 *inst/doc/mvMAPIT.R
 d0f7d8dcff85bbd158570df4103d2752 *inst/doc/mvMAPIT.Rmd
-4384e7c6d425e5d8bba67ddd89bfb10a *inst/doc/mvMAPIT.html
+ad2adc447f076494275571153e988a45 *inst/doc/mvMAPIT.html
 b1f6982a3dc95f3007b7ef4814d8d78e *inst/doc/study-compare-p-value-combine-methods.R
 bbdee46240f867584df9439ba2370648 *inst/doc/study-compare-p-value-combine-methods.Rmd
-cd3054d3b3d8371aef8007c332ae12a2 *inst/doc/study-compare-p-value-combine-methods.html
+4f496401fe1406383386ad191c86dc46 *inst/doc/study-compare-p-value-combine-methods.html
 7f57d241aa8d225ef91b753463ac90eb *inst/doc/study-phillips-bnabs.R
 8270ab1ef3bea72c3202492042aeef39 *inst/doc/study-phillips-bnabs.Rmd
 e6be31c6dc1277131ecd2735b9007123 *inst/doc/study-phillips-bnabs.html
@@ -29,7 +29,7 @@ e1915c5d862d53cd47bc1a85d770cc48 *inst/doc/study-wtccc-mice.Rmd
 34dc0f0244055634426755d6b9ad0c93 *inst/doc/study-wtccc-mice.html
 749b61e6eab8bafe1cd148fcec258fff *inst/doc/tutorial-docker-mvmapit.R
 d3f53b1b20f1bf5c3ece86d1a187e700 *inst/doc/tutorial-docker-mvmapit.Rmd
-65813e31c0d57c01cd92944e3fb251ae *inst/doc/tutorial-docker-mvmapit.html
+e545556ead95d1c08dd25b4d0f2869ed *inst/doc/tutorial-docker-mvmapit.html
 d4b61b2c1f117af0a440ea1b324fdbd4 *inst/doc/tutorial-simulations.R
 d82c7a5834c9ec10d2f1b8cd4e559626 *inst/doc/tutorial-simulations.Rmd
 5d05d6280d6bf3566cff11a1761fb29f *inst/doc/tutorial-simulations.html
@@ -46,7 +46,7 @@ cb12da3263c8b453480914a55e135548 *man/simulate_traits.Rd
 587827988e5d5b71250630a93a829a76 *src/MAPIT.h
 b6f2c19b8ecd0e71e9080b441e84ef08 *src/Makevars
 aa83181589b9650ceb294bcb32bff8e0 *src/Makevars.win
-0c886eccc71187d32b81d8b2321a1c20 *src/RcppExports.cpp
+b703dcf39742579ed524f522a939026d *src/RcppExports.cpp
 bbafedb572929d401dcaab18b5137cee *src/gsm/gsm.cpp
 ec64d86ed921e2abaef6bc7b3b0502d2 *src/gsm/gsm.h
 e3fe230b045e7f9354a1118b94c63710 *src/logging/log.cpp
